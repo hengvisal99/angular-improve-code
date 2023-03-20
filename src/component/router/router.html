@@ -1,0 +1,15 @@
+<ng-container *ngFor="let license of licenses ">
+  <div class="col-md-3" *ngIf="!(license.type === 'renew' && is_disable_renew)">
+    <a class="item" (click)="onRouter(license.formType)">
+      <div class="card">
+        <span class="icon">
+          <mat-icon [svgIcon]="license.icon"></mat-icon>
+        </span>
+        <span class="desc">
+          <p>{{ license.permit | translate }}</p>
+          <p>{{ license.number | translate }}</p>
+        </span>
+      </div>
+    </a>
+  </div>
+</ng-container>

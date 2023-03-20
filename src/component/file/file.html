@@ -1,0 +1,71 @@
+<div *ngFor="let attachment of attachments" class="row">
+  <div class="col-md-10">
+    <mat-icon class="file-icon">insert_drive_file</mat-icon>
+    <p class="value check-text">
+      {{ attachment.label | translate }} {{ attachment.sizeLabel | translate }}
+      <span class="required-sign">*</span>
+      <mat-icon
+        *ngIf="!attachment.doc && showAllError"
+        class="doc-error"
+        matTooltip="{{
+          attachment.label | translate
+        }} {{ 'form.validation.required' | translate }}"
+        [matTooltipClass]="{ 'tooltip-error': !attachment.doc }"
+      >
+        priority_high
+      </mat-icon>
+    </p>
+  </div>
+  <div class="col-md-2 auto-left" *ngIf="attachment.doc?.type != 'moc'">
+    <input
+      #fileProtect
+      accept="application/pdf"
+      (change)="
+        onUploadSupportingDoc(
+          $event,
+          attachment.doc?._id,
+          attachment.key,
+          'sole'
+        )
+      "
+      type="file"
+      hidden
+    />
+    <button
+      mat-stroked-button
+      class="btn-browse"
+      type="button"
+      [ngClass]="{ 'browse-load': attachment.docLoading }"
+      [disabled]="attachment.docLoading"
+      (click)="fileProtect.value = ''; fileProtect.click()"
+    >
+      <i class="material-icons">attachment</i>
+      {{ attachment.doc ? ("button.change" | translate) : ("button.browse_file"
+      | translate) }}
+      <mat-spinner
+        *ngIf="attachment.docLoading"
+        diameter="24"
+        class="btn-spinner"
+      ></mat-spinner>
+    </button>
+  </div>
+</div>
+<div *ngIf="attachment.doc" class="display-doc">
+  <ng-container
+    *ngTemplateOutlet="
+      display_document;
+      context: {
+        $implicit: {
+          name: attachment.doc?.original_name,
+          _id: attachment.doc?._id,
+          key: attachment.key,
+          type: 'sole',
+          index: 0,
+          is_global_file: true,
+          is_disabled: is_moc_data ? true : false
+        }
+      }
+    "
+  >
+  </ng-container>
+</div>
