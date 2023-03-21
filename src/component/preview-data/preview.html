@@ -1,0 +1,21 @@
+
+
+<div class="row">
+  <div class="col col-md-6 col-sm-12">
+    <table class="tbl-data">
+      <tbody>
+        <tr *ngFor="let row of tableRows">
+          <td>
+            <span class="label">{{ getLabel(row.label) }}</span>
+          </td>
+          <td>
+            <span class="value"  *ngIf="row.value; else emptyValue">{{ getValue(row.value, row.transform) }}</span>
+            <ng-template #emptyValue>
+              <span class="value">{{ getLabel('public.empty_value') }}</span>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
