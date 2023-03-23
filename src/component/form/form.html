@@ -1,0 +1,9 @@
+
+<div class="row">
+  <ng-container *ngFor="let item of items">
+    <div [ngClass]="item.class">
+      <p class="label">{{ item.label | translate : { param: item.param } }}</p>
+      <p class="value">{{ item.value }}</p>
+    </div>
+  </ng-container>
+</div>
